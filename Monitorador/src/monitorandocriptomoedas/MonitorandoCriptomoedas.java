@@ -101,7 +101,7 @@ public class MonitorandoCriptomoedas {
         // TRANSFORMANDO RETORNO EM UMA STRING
         String jsonData = response.body().string();
 
-        // DESPRESANDO INICIO DA STRING RETORNO
+        // DESPREZANDO INICIO DA STRING RETORNO
         Integer startIndex = jsonData.indexOf("ticker");
 
         // LIMPANDO RETORNO E FINALIZANDO A STRING COM CARACTERE INICIAL "["
@@ -143,7 +143,7 @@ public class MonitorandoCriptomoedas {
         // TRANSFORMANDO RETORNO EM UMA STRING
         String jsonData = response.body().string();
 
-        // DESPRESANDO INICIO DA STRING RETORNO
+        // DESPREZANDO INICIO DA STRING RETORNO
         Integer startIndex = jsonData.indexOf("ticker");
 
         // LIMPANDO RETORNO E FINALIZANDO A STRING COM CARACTERE INICIAL "["
@@ -185,7 +185,7 @@ public class MonitorandoCriptomoedas {
         // TRANSFORMANDO RETORNO EM UMA STRING
         String jsonData = response.body().string();
 
-        // DESPRESANDO INICIO DA STRING RETORNO
+        // DESPREZANDO INICIO DA STRING RETORNO
         Integer startIndex = jsonData.indexOf("ticker");
 
         // LIMPANDO RETORNO E FINALIZANDO A STRING COM CARACTERE INICIAL "["
@@ -227,7 +227,7 @@ public class MonitorandoCriptomoedas {
         // TRANSFORMANDO RETORNO EM UMA STRING
         String jsonData = response.body().string();
 
-        // DESPRESANDO INICIO DA STRING RETORNO
+        // DESPREZANDO INICIO DA STRING RETORNO
         Integer startIndex = jsonData.indexOf("ticker");
 
         // LIMPANDO RETORNO E FINALIZANDO A STRING COM CARACTERE INICIAL "["

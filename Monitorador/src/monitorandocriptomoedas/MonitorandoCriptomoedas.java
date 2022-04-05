@@ -31,7 +31,7 @@ public class MonitorandoCriptomoedas {
         String chilizString = JOptionPane.showInputDialog("Chiliz - Valor Monitorado (R$): ");
         BigDecimal metaChiliz = convertStringToBigDecimal(chilizString);
 
-        final long time = 300000; // 300.000 milessegundos ou 5 minutos
+        final long CINCO_MINUTOS_EM_MILISSEGUNDOS = 300000;
         Timer timer = new Timer();
         TimerTask tarefa = new TimerTask() {
             public void run() {
@@ -73,7 +73,7 @@ public class MonitorandoCriptomoedas {
 
             }
         };
-        timer.scheduleAtFixedRate(tarefa, time, time);
+        timer.scheduleAtFixedRate(tarefa, CINCO_MINUTOS_EM_MILISSEGUNDOS, CINCO_MINUTOS_EM_MILISSEGUNDOS);
     }
     
     private static BigDecimal convertStringToBigDecimal(String valor) {

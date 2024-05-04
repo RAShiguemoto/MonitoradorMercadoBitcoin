@@ -2,9 +2,9 @@
 Este é um programa Java simples que permite monitorar o preço de algumas criptomoedas, utilizando a API do Mercado Bitcoin, e receber notificações quando o preço de uma criptomoeda atinge um determinado valor.
 
 ## Funcionalidades
--> Configuração das metas de preço para Bitcoin, Litecoin, Ripple e Chiliz. \n
--> Atualização automática do preço das criptomoedas a cada 5 minutos.
--> Exibição de notificação quando o preço de uma criptomoeda atinge a meta configurada.
+-> Configuração das metas de preço para Bitcoin, Litecoin, Ripple e Chiliz.  
+-> Atualização automática do preço das criptomoedas a cada 5 minutos.  
+-> Exibição de notificação quando o preço de uma criptomoeda atinge a meta configurada.  
 
 # Pré-requisitos
 -> Java 8 ou superior instalado.

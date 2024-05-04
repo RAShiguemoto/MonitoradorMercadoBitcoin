@@ -6,6 +6,8 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JOptionPane;
@@ -19,64 +21,78 @@ import org.json.JSONObject;
 public class MonitorandoCriptomoedas {
 
     public static void main(String[] args) throws IOException {
-        String bitcoinString = JOptionPane.showInputDialog("Bitcoin - Valor Monitorado (R$): ");
-        BigDecimal metaBitcoin = convertStringToBigDecimal(bitcoinString);
+    	
+    	Map<String, BigDecimal> metas = new HashMap<>();
+    	
+    	try {
+    		metas = getMetas();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	executarTarefa(metas);        
+    }
+    
+	private static Map<String, BigDecimal> getMetas() throws Exception {
+		Map<String, BigDecimal> metas = new HashMap<>();
+		
+		String metaPrecoString = JOptionPane.showInputDialog("Bitcoin - Valor Monitorado (R$): ");
+		metas.put("BTC", convertStringToBigDecimal(metaPrecoString));
 
-        String litecoinString = JOptionPane.showInputDialog("Litecoin - Valor Monitorado (R$): ");
-        BigDecimal metaLitecoin = convertStringToBigDecimal(litecoinString);
+		metaPrecoString = JOptionPane.showInputDialog("Litecoin - Valor Monitorado (R$): ");
+		metas.put("LTC", convertStringToBigDecimal(metaPrecoString));
 
-        String rippleString = JOptionPane.showInputDialog("Ripple - Valor Monitorado (R$): ");
-        BigDecimal metaRipple = convertStringToBigDecimal(rippleString);
+		metaPrecoString = JOptionPane.showInputDialog("Ripple - Valor Monitorado (R$): ");
+		metas.put("XRP", convertStringToBigDecimal(metaPrecoString));
 
-        String chilizString = JOptionPane.showInputDialog("Chiliz - Valor Monitorado (R$): ");
-        BigDecimal metaChiliz = convertStringToBigDecimal(chilizString);
+		metaPrecoString = JOptionPane.showInputDialog("Chiliz - Valor Monitorado (R$): ");
+		metas.put("CHZ", convertStringToBigDecimal(metaPrecoString));
 
-        final long CINCO_MINUTOS_EM_MILISSEGUNDOS = 300000;
+		return metas;
+	}
+	
+	private static void executarTarefa(Map<String, BigDecimal> metas) {
+		final long CINCO_MINUTOS_EM_MILISSEGUNDOS = 300000;
+		
         Timer timer = new Timer();
+        
         TimerTask tarefa = new TimerTask() {
             public void run() {
-                try {
-                    Boolean validador = Boolean.FALSE;
-                    String mensagem = "";
+                try {                	
+                	boolean validador = false;
                     
-                    BigDecimal btcPreco = buscarPrecoMoeda("BTC");
-                    if (btcPreco.compareTo(metaBitcoin) >= 1) {
-                        validador = Boolean.TRUE;
-                        mensagem = "Bitcoin R$ " + btcPreco;
-                    }
+                	String mensagem = "";
                     
-                    BigDecimal ltcPreco = buscarPrecoMoeda("LTC");
-                    if (ltcPreco.compareTo(metaLitecoin) >= 1) {
-                        validador = Boolean.TRUE;
-                        mensagem = mensagem + "\nLitecoin R$ " + ltcPreco;
-                    }
+                	BigDecimal precoMoeda;
+                	
+                	for (String key : metas.keySet()) {
+                		precoMoeda = buscarPrecoMoeda(key);
+                		
+                		if (precoMoeda.compareTo(metas.get(key)) >= 1) {
+                			validador = true;
+                			mensagem = key + " R$ " + precoMoeda;
+                		}
+                	}
                     
-                    BigDecimal xrpPreco = buscarPrecoMoeda("XRP");
-                    if (xrpPreco.compareTo(metaRipple) >= 1) {
-                        validador = Boolean.TRUE;
-                        mensagem = mensagem + "\nRipple R$ " + xrpPreco;
-                    }
-                    
-                    BigDecimal chzPreco = buscarPrecoMoeda("CHZ");
-                    if (chzPreco.compareTo(metaChiliz) >= 1) {
-                        validador = Boolean.TRUE;
-                        mensagem = mensagem + "\nChiliz R$ " + chzPreco;
-                    }
-                    
-                    if (validador.equals(Boolean.TRUE)) {
+                    if (validador == true) {
                         JOptionPane.showMessageDialog(null, mensagem);
                     }
                     
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         };
+        
         timer.scheduleAtFixedRate(tarefa, CINCO_MINUTOS_EM_MILISSEGUNDOS, CINCO_MINUTOS_EM_MILISSEGUNDOS);
-    }
+	}
     
-    private static BigDecimal convertStringToBigDecimal(String valor) {
+    private static BigDecimal convertStringToBigDecimal(String valor) throws Exception {
+    	
+    	if (valor == null || valor.equals("") || !valor.matches("[0-9]+")) {
+    		throw new IllegalArgumentException("Valor não pode ser nulo/vazio e deve conter apenas números.");
+    	}
+    	
         String valorFormatado = valor.replace(",", ".");
         valorFormatado = valorFormatado.replace(" ", "");
         return new BigDecimal(valorFormatado);
